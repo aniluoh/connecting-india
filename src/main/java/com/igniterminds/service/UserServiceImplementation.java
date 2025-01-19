@@ -20,13 +20,12 @@ public class UserServiceImplementation implements UserService{
 	public User registerUser(User user) {
 		User newUser = new User();
 		newUser.setEmail(user.getEmail());
-		newUser.setFistName(user.getFistName());
+		newUser.setFirstName(user.getFirstName());
 		newUser.setLastName(user.getLastName());
 		newUser.setPassword(user.getPassword());
 		newUser.setId(user.getId());
 		
 		User createdUsed = userRepositary.save(newUser);
-		
 		return createdUsed;
 	}
 
@@ -42,14 +41,22 @@ public class UserServiceImplementation implements UserService{
 	@Override
 	public User findUserByEmail(String email) {
 		
-		// TODO Auto-generated method stub
-		return null;
+		User user = userRepositary.findByEmail(email);
+		return user;
 	}
 
 	@Override
-	public User followUser(Integer userId1, Integer userId2) {
+	public User followUser(Integer userId1, Integer userId2) throws Exception {
+		User user1 = findUserById(userId1);
+		User user2 = findUserById(userId2);
+		
+		user1.getFollowers().add(userId2);
+		user2.getFollowing().add(userId1);
+		
+		userRepositary.save(user1);
+		userRepositary.save(user2);
 		// TODO Auto-generated method stub
-		return null;
+		return user1;
 	}
 
 	@Override
@@ -63,8 +70,8 @@ public class UserServiceImplementation implements UserService{
 		
 		User oldUser = findUser.get();
 		
-		if(user.getFistName()!=null) {
-			oldUser.setFistName(user.getFistName());
+		if(user.getFirstName()!=null) {
+			oldUser.setFirstName(user.getFirstName());
 		}
 		
 		if(user.getLastName()!=null) {
@@ -85,8 +92,7 @@ public class UserServiceImplementation implements UserService{
 
 	@Override
 	public List<User> serachUser(String query) {
-		// TODO Auto-generated method stub
-		return null;
+		return userRepositary.searchUser(query);
 	}
 
 }

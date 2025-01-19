@@ -1,5 +1,8 @@
 package com.igniterminds.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -10,22 +13,51 @@ public class User {
 
 	@Id
 	private Integer id;
-	private String fistName;
+	private String firstName;
 	private String lastName;
+	private String gender;
 	private String email;
 	private String password;
-	
+	private List<Integer> followers = new ArrayList<>();
+	private List<Integer> following = new ArrayList<>();;
 	public User() {
-		
 	}
 
-	public User(Integer id, String fistName, String lastName, String email, String password) {
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public List<Integer> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(List<Integer> followers) {
+		this.followers = followers;
+	}
+
+	public List<Integer> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(List<Integer> following) {
+		this.following = following;
+	}
+
+	public User(Integer id, String fistName, String lastName, String gender, String email, String password,
+			List<Integer> followers, List<Integer> following) {
 		super();
 		this.id = id;
-		this.fistName = fistName;
+		this.firstName = fistName;
 		this.lastName = lastName;
+		this.gender = gender;
 		this.email = email;
 		this.password = password;
+		this.followers = followers;
+		this.following = following;
 	}
 
 	public Integer getId() {
@@ -36,12 +68,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getFistName() {
-		return fistName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFistName(String fistName) {
-		this.fistName = fistName;
+	public void setFirstName(String fistName) {
+		this.firstName = fistName;
 	}
 
 	public String getLastName() {
@@ -70,8 +102,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", fistName=" + fistName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender
+				+ ", email=" + email + ", password=" + password + ", followers=" + followers + ", following="
+				+ following + "]";
 	}
 
 	
