@@ -1,6 +1,5 @@
 package com.igniterminds.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,29 +11,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.DeleteExchange;
 
 import com.igniterminds.models.User;
 import com.igniterminds.repositary.UserRepositary;
+import com.igniterminds.service.UserService;
 
 @RestController
 public class UserController {
 	
 	@Autowired
 	UserRepositary userRepo;
+	@Autowired
+	UserService userService;
 	
 	@PostMapping("/users")
 	public User createUser(@RequestBody User user) {
-		User newUser = new User();
-		newUser.setEmail(user.getEmail());
-		newUser.setFistName(user.getFistName());
-		newUser.setLastName(user.getLastName());
-		newUser.setPassword(user.getPassword());
-		newUser.setId(user.getId());
-		
-		User createdUsed = userRepo.save(newUser);
-		
-		return createdUsed;
+		User savedUser = userService.registerUser(user);
+		return savedUser;
 	}
 		
 	@GetMapping("/users")
@@ -44,18 +37,17 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/{userId}")
-	public User getUser(@PathVariable("userId")Integer id) throws Exception {
-		Optional<User> user = userRepo.findById(id);
-		if(user.isPresent()) {
-			return user.get();
-		}
-		throw new Exception("User not exists in database with user id : "+id);
-//		return null;
+	public User getUserById(@PathVariable("userId")Integer id) throws Exception {
+		User user = userService.findUserById(id);
+		return user;
 	}
 	
 	@PutMapping("/users/{userId}")
 	public User updateUser(@RequestBody User user,@PathVariable Integer userId ) throws Exception {
 		
+		User updatedUser = userService.updateUser(user, userId);
+		return updatedUser;
+		/*
 		Optional<User> findUser = userRepo.findById(userId);
 		
 		if(findUser.isEmpty()) {
@@ -63,7 +55,6 @@ public class UserController {
 		}
 		
 		User oldUser = findUser.get();
-		
 		
 		if(user.getFistName()!=null) {
 			oldUser.setFistName(user.getFistName());
@@ -82,18 +73,8 @@ public class UserController {
 		}
 		
 		User updatedUser = userRepo.save(oldUser);
-//		User userUpdate = userRepo.
-		
-		/*
-		 * User user2 = new User(2, "Annu", "Chaurasiya", "annu@igniterminds.com",
-		 * "Test123");
-		 * 
-		 * if(user.getFistName()!=null) { user2.setFistName(user.getFistName()); }
-		 * 
-		 * if(user.getEmail()!=null) { user2.setEmail(user.getEmail()); }
-		 * if(user.getLastName()!=null) { user2.setLastName(user.getLastName()); }
-		 */
 		return updatedUser;
+		*/
 	}
 	
 	@DeleteMapping("/users/{userId}")
