@@ -1,6 +1,8 @@
 package com.igniterminds.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,12 +22,18 @@ public class Post {
 	private String video;
 	private User user;
 	private LocalDate createdDate;
+	private List<User> liked = new ArrayList<>();
+	
 	
 	public Post() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Post(Integer postId, String caption, String image, String video, User user, LocalDate createdDate) {
+	
+	
+
+	public Post(Integer postId, String caption, String image, String video, User user, LocalDate createdDate,
+			List<User> liked) {
 		super();
 		this.postId = postId;
 		this.caption = caption;
@@ -33,7 +41,11 @@ public class Post {
 		this.video = video;
 		this.user = user;
 		this.createdDate = createdDate;
+		this.liked = liked;
 	}
+
+
+
 	public Integer getPostId() {
 		return postId;
 	}
@@ -70,11 +82,21 @@ public class Post {
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
 	}
+
+	public List<User> getLiked() {
+		return liked;
+	}
+
+	public void setLiked(List<User> liked) {
+		this.liked = liked;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Post [postId=" + postId + ", caption=" + caption + ", image=" + image + ", video=" + video + ", user="
-				+ user + ", createdDate=" + createdDate + "]";
+				+ user + ", createdDate=" + createdDate + ", liked=" + liked +  "]";
 	}
-	
 	
 }

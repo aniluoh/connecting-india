@@ -17,8 +17,8 @@ public interface PostService {
 	
 	public List<Post> findAllPost();
 	
-	public Post savePost(Integer postId, Integer userId);
+	public Post savePost(Integer postId, Integer userId) throws Exception;
 	
-	public Post likePost(Integer postId, Integer userId);
+	public Post likePost(Integer postId, Integer userId) throws Exception;
 	
 }

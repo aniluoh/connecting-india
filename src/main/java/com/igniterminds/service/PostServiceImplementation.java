@@ -19,6 +19,8 @@ public class PostServiceImplementation implements PostService{
 	PostRepositary postRepositary;
 	@Autowired
 	UserService userService;
+	@Autowired
+	UserRepositary userRepositary;
 
 	@Override
 	public Post createNewPost(Post post,Integer userId) throws Exception {
@@ -78,15 +80,31 @@ public class PostServiceImplementation implements PostService{
 	}
 
 	@Override
-	public Post savePost(Integer postId, Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Post savePost(Integer postId, Integer userId) throws Exception {
+		Post post = findPostById(postId);
+		
+		User user = userService.findUserById(userId);
+		
+		if(user.getSavedPost().contains(post)) {
+			user.getSavedPost().remove(post);
+		} else {
+			user.getSavedPost().add(post);
+		}
+		userRepositary.save(user);
+		
+		return post;
 	}
 
 	@Override
-	public Post likePost(Integer postId, Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Post likePost(Integer postId, Integer userId) throws Exception {
+		Post post = findPostById(postId);	
+		User user = userService.findUserById(userId);
+		if(post.getLiked().contains(user)){
+			post.getLiked().remove(user);
+		} else {
+			post.getLiked().add(user);
+		}
+		return postRepositary.save(post);
 	}
 
 }
