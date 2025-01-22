@@ -7,9 +7,9 @@ import com.igniterminds.models.User;
 
 public interface PostService {
 	
-	public Post createNewPost(Integer userId) throws Exception;
+	public Post createNewPost(Post post, Integer userId) throws Exception;
 	
-	public void deletePost(Integer postId, User userId) throws Exception;
+	public String deletePost(Integer postId, Integer userId) throws Exception;
 
 	public List<Post> findPostByUserId(Integer id);
 	

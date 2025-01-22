@@ -11,15 +11,6 @@ import com.igniterminds.models.User;
 @RestController
 public class PostController {
 		
-//	@GetMapping("/users")
-	public List<User> getUsers() {
-//		List<User> users = new ArrayList<>() ;
-//		User user1 = new User("Anil", "Chaurasiya", "achaurasiya@igniterminds.com", "Test123");
-//		User user2 = new User("Annu", "Chaurasiya", "annu@igniterminds.com", "Test123");
-//		
-//		users.add(user1);  
-//		users.add(user2);  
-		return null;
-	}
+//	@
 		
 }
